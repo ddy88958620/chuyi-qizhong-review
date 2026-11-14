@@ -337,6 +337,7 @@
   function renderFiles(sec) {
     var h = '<div class="file-list">';
     sec.items.forEach(function (f) {
+      if (f.available_online === false) { h += '<div class="file-item file-unavailable"><span class="file-name">📎 ' + esc(f.name) + '</span><span class="file-size">线上暂不可下载</span></div>'; return; }
       h += '<a class="file-item" href="' + esc(f.path) + '" download><span class="file-name">📎 ' + esc(f.name) + '</span>' +
         '<span class="file-size">' + esc(f.size) + '　下载 ⬇</span></a>';
     });
