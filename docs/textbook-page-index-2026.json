@@ -1,0 +1,135 @@
+{
+  "as_of": "2026-11-14",
+  "purpose": "2024秋修订七年级上册纸质教材章节起始页索引；题目审计中的paper_page先记录章节起始页，题目所在页仍需人工翻页确认。",
+  "source_note": "教材版本与页数来自国家中小学智慧教育平台目录元数据；章节起始页来自kebiao开放教材目录索引，使用时应以手中纸质教材印次复核。public_pdf_url 仅作为电子教材定位线索，不替代官方纸质印次；当前下载端返回访问限制。",
+  "books": {
+    "his": {
+      "edition": "统编版2024七年级上册",
+      "pages": 134,
+      "official_url": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=8fc851b4-28df-4eaa-8e55-08d63dc1fe38&catalogType=tchMaterial&subCatalog=dzjc",
+      "index_url": "https://www.kebiao.org/textbooks/ed_425e807c22d73fd8d96b",
+      "chapters": {
+        "第1课 远古时期的人类活动": 4,
+        "第2课 原始农业与史前社会": 9,
+        "第3课 中华文明的起源": 15,
+        "第4课 夏商西周王朝的更替": 22,
+        "第5课 动荡变化中的春秋时期": 28,
+        "第6课 战国时期的社会变革": 33,
+        "第7课 百家争鸣": 39,
+        "第8课 夏商周时期的科技与文化": 44,
+        "第9课 秦统一中国": 52,
+        "第10课 秦末农民大起义": 58,
+        "第11课 西汉建立和“文景之治”": 63,
+        "第12课 大一统王朝的巩固": 67,
+        "第13课 东汉的兴衰": 73,
+        "第14课 丝绸之路的开通与经营西域": 78,
+        "第15课 秦汉时期的科技与文化": 84,
+        "第16课 三国鼎立": 92,
+        "第17课 西晋的短暂统一和北方各族的内迁": 98,
+        "第18课 东晋南朝政治和江南地区开发": 102,
+        "第19课 北朝政治和北方民族大交融": 107,
+        "第20课 三国两晋南北朝时期的科技与文化": 113,
+        "第21课 活动课 从考古发现看中华文明的起源": 119
+      },
+      "verification_pdf_url": "https://keben.app/book/0194",
+      "verification_pdf_sha256": "e3ede4e845a500271a2941ac56dbb4d33605871e0b0a7be5aee26cd1d04a7f7f",
+      "verification_pdf_page_offset": 5,
+      "verification_note": "已按2024版电子教材页眉/目录逐题定位锚点；纸质教材最终页码须按学生手中印次逐页复核。"
+    },
+    "geo": {
+      "edition": "人教版2024七年级上册",
+      "pages": 129,
+      "official_url": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=4d045a6b-46f3-42de-9c91-89bc443cbeff&catalogType=tchMaterial&subCatalog=dzjc",
+      "public_pdf_url": "https://r1-ndr.ykt.cbern.com.cn/edu_product/esp/assets/4d045a6b-46f3-42de-9c91-89bc443cbeff.pkg/pdf.pdf",
+      "index_url": "https://www.kebiao.org/textbooks/ed_92369ed68f9321363e22",
+      "chapters": {
+        "第一章 地球": 5,
+        "第二章 地图": 27,
+        "第三章 陆地和海洋": 43,
+        "第四章 天气与气候": 65,
+        "第五章 居民与文化": 91,
+        "第六章 发展与合作": 109
+      },
+      "verification_pdf_url": "https://keben.app/book/0179",
+      "verification_pdf_sha256": "00c554e16f476c4a25551314d11e9f20ddeeb6f18d20d3074b3868ab55ce83f7",
+      "verification_pdf_page_offset": 5,
+      "verification_note": "已按2024版电子教材页眉/目录逐题定位锚点；纸质教材最终页码须按学生手中印次逐页复核。"
+    },
+    "bio": {
+      "edition": "人教版2024七年级上册",
+      "pages": 146,
+      "official_url": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=405270eb-9f00-4bba-b0f6-da863340625f&catalogType=tchMaterial&subCatalog=dzjc",
+      "index_url": "https://www.kebiao.org/textbooks/ed_913b2b9b81e81dabcf0a",
+      "chapters": {
+        "第一单元 生物和细胞": 1,
+        "第一章 认识生物": 2,
+        "第二章 认识细胞": 12,
+        "第三章 从细胞到生物体": 33,
+        "第二单元 多种多样的生物": 56,
+        "第二单元第一章 藻类与植物的类群": 58,
+        "第二单元第二章 动物的类群": 73,
+        "第二单元第三章 微生物": 98,
+        "第二单元第四章 生物分类的方法": 122
+      },
+      "verification_pdf_url": "https://keben.app/book/0189",
+      "verification_pdf_sha256": "a3fa62c010ba830872e4a52354186009495fda15ea5d0668516f7698fe3c7354",
+      "verification_pdf_page_offset": 9,
+      "verification_note": "已按2024版电子教材页眉/目录逐题定位锚点；纸质教材最终页码须按学生手中印次逐页复核。"
+    },
+    "df": {
+      "edition": "统编版2024七年级上册",
+      "pages": 114,
+      "official_url": "https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=11446212-4b7b-4094-afe3-bd5b4f2b3f0c&catalogType=tchMaterial&subCatalog=dzjc",
+      "index_url": "https://www.kebiao.org/textbooks/ed_258a293644bf7f6dc23f",
+      "chapters": {
+        "第一单元 少年有梦": 1,
+        "第二单元 成长的时空": 25,
+        "第三单元 珍爱我们的生命": 59,
+        "第四单元 追求美好人生": 83
+      },
+      "verification_pdf_url": "https://keben.app/book/0085",
+      "verification_pdf_sha256": "1a3d34f93331a369b8d060894703f5dff584c2b38e3eefb40e5b49b9d336cad6",
+      "verification_pdf_page_offset": 7,
+      "verification_note": "已按2024版电子教材页眉/目录逐题定位锚点；纸质教材最终页码须按学生手中印次逐页复核。"
+    },
+    "eng": {
+      "edition": "人教版2024七年级上册",
+      "pages": 138,
+      "official_url": "https://basic.smartedu.cn/",
+      "index_url": "https://keben.app/book/0177",
+      "verification_pdf_url": "https://keben.app/book/0177",
+      "verification_pdf_sha256": "6c51f67ecdbf4104ff6ed5cf36aa97c9ab6b12683407ca506d094598eeee1c2e",
+      "verification_pdf_page_offset": null,
+      "chapters": {
+        "Starter Unit 1 Hello!": 10,
+        "Starter Unit 2 Keep Tidy!": 18,
+        "Starter Unit 3 Welcome!": 26,
+        "Unit 1 You and Me": 35,
+        "Unit 2 We’re Family!": 39,
+        "Unit 3 My School": 43,
+        "Unit 4 My Favourite Subject": 51,
+        "Unit 5 Fun Clubs": 59,
+        "Unit 6 A Day in the Life": 67,
+        "Unit 7 Happy Birthday!": 75
+      },
+      "verification_note": "目录页与单元首页已核对；纸质教材印次与题目精确页码仍需按学生手中教材逐页复核。"
+    },
+    "zh": {
+      "edition": "统编版2024七年级上册",
+      "pages": 166,
+      "official_url": "https://basic.smartedu.cn/",
+      "index_url": "https://keben.app/book/0073",
+      "verification_pdf_url": "https://keben.app/book/0073",
+      "verification_pdf_sha256": "b23b7c884609c51c4b9caace7435cde226d01c0b37f321c5ffbf23cbdd89d919",
+      "verification_pdf_page_offset": 7,
+      "chapters": {
+        "《世说新语》二则（第8课）": 35,
+        "《论语》十二章（第12课）": 62,
+        "《诫子书》（第16课）": 91,
+        "《狼》（第20课）": 125,
+        "《寓言四则》选篇（第22课）": 147
+      },
+      "verification_note": "文言文上册篇目与2024统编版目录、课文起始页已核对；纸质教材印次与逐题页码仍需按学生手中教材复核。"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-11-14",
+  "purpose": "公开原卷预览的版本、地区、页数和图片证据登记；不替代三河市官方试卷数据库或纸质教材逐题复核。",
+  "records": [
+    {
+      "subject": "his",
+      "title": "河北保定市高新技术开发区2026-2027第一学期期中阶段性检测七年级历史试卷",
+      "region": "河北省保定市高新技术产业开发区",
+      "academic_year": "2026-2027",
+      "edition": "统编版",
+      "source_url": "https://www.21cnjy.com/H/8/49042/27042952.shtml",
+      "source_page_status": "可打开详情页",
+      "total_pages": 6,
+      "preview_pages": 3,
+      "preview_image_urls": [
+        "https://preview.21cnjy.com/f2/2026/11/29/291c1d01fba086bce7c4a22988d833c1.svg?v=1794481528"
+      ],
+      "answer_available": false,
+      "same_version_pool": true,
+      "notes": "页面明示统编版、河北省；仅开放部分预览，未取得完整原件和官方题号。"
+    },
+    {
+      "subject": "df",
+      "title": "河北邢台市襄都区2026-2027学年七年级上学期期中道德与法治试题",
+      "region": "河北省邢台市襄都区",
+      "academic_year": "2026-2027",
+      "edition": "统编版",
+      "source_url": "https://www.21cnjy.com/H/9/49083/27031111.shtml",
+      "source_page_status": "可打开详情页",
+      "total_pages": 2,
+      "preview_pages": 1,
+      "preview_image_urls": [
+        "https://preview.21cnjy.com/f2/2026/11/49/497433581212df04479035d3a7a9e71e.svg?v=1794519304"
+      ],
+      "answer_available": false,
+      "same_version_pool": true,
+      "notes": "页面明示统编版、河北省；仅开放部分预览，未取得完整原件和官方题号。"
+    },
+    {
+      "subject": "geo",
+      "title": "河北省保定市保定高新技术产业开发区2026-2027学年第一学期期中阶段性检测七年级地理试卷",
+      "region": "河北省保定市保定高新技术产业开发区",
+      "academic_year": "2026-2027",
+      "edition": "通用版",
+      "source_url": "https://www.21cnjy.com/H/10/49126/27051677.shtml",
+      "source_page_status": "可打开详情页",
+      "total_pages": 10,
+      "preview_pages": 5,
+      "preview_image_urls": [
+        "https://preview.21cnjy.com/f2/2026/11/08/082d2e04f672f49de3e9d749db2d820a.svg?v=1794531580"
+      ],
+      "answer_available": false,
+      "same_version_pool": false,
+      "notes": "页面明确标注通用版，已排除出人教版高频来源池。"
+    },
+    {
+      "subject": "bio",
+      "title": "河北省石家庄市第四十四中学2026—2027学年度第一学期期中测试七年级生物试卷",
+      "region": "河北省石家庄市第四十四中学",
+      "academic_year": "2026-2027",
+      "edition": "通用版",
+      "source_url": "https://www.21cnjy.com/H/11/49151/27026428.shtml",
+      "source_page_status": "可打开详情页",
+      "total_pages": 9,
+      "preview_pages": 4,
+      "preview_image_urls": [
+        "https://preview.21cnjy.com/f2/2026/11/ad/addfa4bb42efb26a51668738716ee1a0.svg?v=1794598048"
+      ],
+      "answer_available": true,
+      "same_version_pool": false,
+      "notes": "页面明确标注通用版，已排除出人教版高频来源池。"
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   'use strict';
 
   var REPO_URL = 'https://github.com/Enzo-River/chuyi-qizhong-review';
-  var ORDER = ['bio', 'his', 'df', 'geo'];
+  var ORDER = ['bio', 'his', 'df', 'geo', 'zh', 'math', 'eng'];
   var D = window.REVIEW_DATA || {};
   var SUBJECTS = ORDER.map(function (k) { return D[k]; }).filter(Boolean);
   var STORE = 'chu1_review_v1';
@@ -24,12 +24,39 @@
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
+  function rich(s) {
+    return esc(s).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  }
   function el(id) { return document.getElementById(id); }
+  function sectionsOf(sub) { return sub.sections; }
+  function firstSection(sub, test, fallback) {
+    var sections = sectionsOf(sub), found = null;
+    sections.forEach(function (sec) { if (!found && test(sec)) found = sec; });
+    return found || fallback || sections[0];
+  }
+  function learningPath(sub) {
+    var sections = sectionsOf(sub);
+    var core = firstSection(sub, function (sec) { return /-pep-core$/.test(sec.id); }) ||
+      firstSection(sub, function (sec) { return sec.kind === 'notes' && !sec.legacy; });
+    var remember = firstSection(sub, function (sec) { return (sec.kind === 'cards' || sec.kind === 'fill') && !sec.hot && !sec.legacy; }) ||
+      firstSection(sub, function (sec) { return sec.kind === 'cards' || sec.kind === 'fill'; });
+    var practice = firstSection(sub, function (sec) { return sec.hot && (sec.kind === 'mcq' || sec.kind === 'cards'); }) ||
+      firstSection(sub, function (sec) { return sec.kind === 'mcq'; });
+    var review = firstSection(sub, function (sec) { return sec.kind === 'qa'; }) ||
+      firstSection(sub, function (sec) { return sec.kind === 'mcq' && sec !== practice; }) || remember || core;
+    return [
+      { id: core.id, label: '先懂', icon: '🌱', hint: '知识要点' },
+      { id: (remember || core).id, label: '会记', icon: '🧠', hint: '抽背与自测' },
+      { id: (practice || remember || core).id, label: '会做', icon: '🎯', hint: '少量练习' },
+      { id: (review || practice || core).id, label: '复盘', icon: '✨', hint: '答案与掌握' }
+    ];
+  }
   function byId(sub, sec) {
     for (var i = 0; i < SUBJECTS.length; i++) {
       if (SUBJECTS[i].id === sub) {
-        for (var j = 0; j < SUBJECTS[i].sections.length; j++) {
-          if (SUBJECTS[i].sections[j].id === sec) return SUBJECTS[i].sections[j];
+        var sections = sectionsOf(SUBJECTS[i]);
+        for (var j = 0; j < sections.length; j++) {
+          if (sections[j].id === sec) return sections[j];
         }
       }
     }
@@ -42,7 +69,7 @@
     var total = 0, done = 0, quizTotal = 0, cards = 0, fills = 0;
     SUBJECTS.forEach(function (sub) {
       if (subjectId && sub.id !== subjectId) return;
-      sub.sections.forEach(function (sec) {
+      sectionsOf(sub).forEach(function (sec) {
         if (sec.kind === 'cards' || sec.kind === 'fill' || sec.kind === 'qa') {
           sec.items.forEach(function (_, i) {
             total++;
@@ -75,15 +102,14 @@
     var st = stats();
     var h = '<div class="wrap"><section class="hero">' +
       '<h1>初一上 · 期中在线复习</h1>' +
-      '<p class="lead">生物 · 历史 · 道法 · 地理　四科资料分门别类，边看边测，随时抽背。</p>' +
-      '<p class="meta">生物 / 历史 / 道法整理自 2026-2027 学年期中复习资料，地理按湘教版 2024 版教材自主整理　·　共 ' + SUBJECTS.length + ' 科 / ' +
-      SUBJECTS.reduce(function (n, s) { return n + s.sections.length; }, 0) + ' 个板块</p>' +
+      '<p class="lead">生物 · 历史 · 道法 · 地理 · 语文 · 数学 · 英语　七科资料分门别类，边看边测，随时抽背。</p>' +
+      '<p class="meta">语文（统编版·人教社）/ 数学 / 英语按人教版 2022 课标修订版（2024 秋启用，2026 年七年级在用）自主整理；历史 / 地理 / 生物 / 道法已接入新版人教版/统编版知识主线与专项题型，旧资料保留并标注待迁移　·　共 ' + SUBJECTS.length + ' 科 · 每科 4 步学习路径</p>' +
       '</section>' + progressBar(st);
 
     h += '<div class="grid">';
     SUBJECTS.forEach(function (sub) {
       var s = stats(sub.id), mcq = 0, notes = 0, quizCards = 0;
-      sub.sections.forEach(function (sec) {
+      sectionsOf(sub).forEach(function (sec) {
         if (sec.kind === 'mcq') mcq += sec.items.length;
         if (sec.kind === 'notes') notes += sec.groups.length;
         if (sec.kind === 'cards') quizCards += sec.items.length;
@@ -95,19 +121,17 @@
         '<h2>' + esc(sub.name) + '</h2>' +
         '<p class="sc-sub">' + esc(sub.sub) + '</p>' +
         '<p class="sc-desc">' + esc(sub.desc) + '</p>' +
-        '<div class="sc-stats"><span><b>' + sub.sections.length + '</b> 个板块</span>' +
+        '<div class="sc-stats"><span><b>4</b> 步学习路径</span>' +
         '<span><b>' + notes + '</b> 组知识要点</span>' + third +
         '<span>已掌握 <b>' + s.done + '/' + s.total + '</b></span></div></a>';
     });
     h += '</div>';
 
-    h += '<section class="howto"><h3>怎么用</h3><ol>' +
-      '<li><b>先看知识提纲</b>：按章节折叠展开，点「遮罩速记」盖住要点边回忆边对照。</li>' +
-      '<li><b>再自测</b>：生物填空由「空白版 ↔ 答案版」逐行比对生成；地理另配 45 空填空、52 张抽背卡。</li>' +
-      '<li><b>刷题与对照</b>：生物、道法原卷选择题与地理自编选择题可即时判分；非选择题可展开看参考答案，地理每题附解析。</li>' +
-      '<li><b>抽背</b>：道法必考 20 题、历史 42 张卡、地理 52 张卡，可随机抽取、逐张标记已掌握。</li>' +
-      '<li><b>看图复习</b>：生物 / 道法原卷配图、历史 PPT 整页结构图已嵌回站内；地理另配 6 张自制识图示意图，点图可放大。</li>' +
-      '<li><b>查原件</b>：生物、历史、道法提供原 Word / PPT / PDF 下载；地理为按教材自主整理，无校内原件。</li>' +
+    h += '<section class="howto"><h3>推荐学习方式</h3><ol>' +
+      '<li><b>先懂</b>：每科先打开“先懂”，一次只学一个小组；需要记忆时再点“遮罩速记”。</li>' +
+      '<li><b>会记</b>：用抽背卡或填空把刚学的内容说出来，答案只在需要时展开。</li>' +
+      '<li><b>会做</b>：先做少量高频样式题，答错后看解析和关联知识点，不连续刷大量题。</li>' +
+      '<li><b>复盘</b>：标记“已掌握”，下次从未掌握内容开始；旧资料、配套 PDF 和全部原有板块放在“更多内容”。</li>' +
       '</ol></section></div>';
     return h;
   }
@@ -124,6 +148,22 @@
     if (!imgs || !imgs.length) return '';
     return '<div class="q-figs"><div class="fig-label">🖼 原卷配图 · 点击放大</div>' +
       '<div class="fig-grid">' + imgs.map(function (f) { return figLink(f, false); }).join('') + '</div></div>';
+  }
+  function auditLine(it) {
+    var a = it && it.audit;
+    if (!a) return '';
+    var status = a.status === 'verified' ? '已核验' : (a.status === 'textbook_exact_page_mapped_pending_official_exam_check' ? '教材页码已匹配，官方题号待核验' : (a.status === 'textbook_unit_mapped_pending_exact_page_and_official_exam_check' ? '可用于学习｜教材章节已映射，精确页码/官方题号待核验' : '待逐题核验'));
+    var badge = a.status === 'verified' ? '✓' : 'ⓘ';
+    var link = a.source_url ? ' · <a href="' + esc(a.source_url) + '" target="_blank" rel="noopener">查看试题来源</a>' : '';
+    var textbookLink = a.textbook_source_url ? ' · <a href="' + esc(a.textbook_source_url) + '" target="_blank" rel="noopener">打开教材平台</a>' : '';
+    var indexLink = a.textbook_page_index_url ? ' · <a href="' + esc(a.textbook_page_index_url) + '" target="_blank" rel="noopener">查看页码索引</a>' : '';
+    var freq = a.frequency_source_count ? ' · 高频样式来源池：' + esc(a.frequency_source_count) + ' 个（非官方频次）' : '';
+    var region = a.region_scope ? ' · 地区范围：' + esc(a.region_scope) : '';
+    var evidence = a.textbook_evidence || {};
+    var textbookEvidence = evidence.anchor_printed_page ? ' · 教材对照页：第' + esc(evidence.anchor_printed_page) + '页（电子教材页脚' + (evidence.pdf_footer_page_match ? '已匹配' : '待核对') + '；纸质印次待复核）' : '';
+    var pageImage = evidence.page_image ? ' <a class="audit-page-link" href="' + esc(evidence.page_image) + '" target="_blank" rel="noopener"><img loading="lazy" src="' + esc(evidence.page_image) + '" alt="教材第' + esc(evidence.anchor_printed_page || '') + '页预览">查看教材页图</a>' : '';
+    var pool = Array.isArray(a.frequency_source_urls) && a.frequency_source_urls.length ? '<details class="audit-sources"><summary>展开来源池</summary><ul>' + a.frequency_source_urls.map(function (u) { return '<li><a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(u) + '</a></li>'; }).join('') + '</ul></details>' : '';
+    return '<details class="audit-corner" title="查看核验信息"><summary aria-label="查看核验信息">' + badge + '</summary><div class="audit-detail">核验状态：' + esc(status) + ' · 教材：' + esc(a.edition) + ' · 教材定位：' + esc(a.textbook_ref || '待补录') + ' · 纸质页码：' + esc(a.paper_page || '待补录') + textbookEvidence + pageImage + ' · 题源证据：' + esc(a.exam_evidence_level || '待补录') + region + freq + ' · 官方题号：' + esc(a.official_exam_question_no || '待补录') + ' · 官方数据库：' + esc(a.official_database_status || '待检索') + ' · ' + esc(a.exam_source) + textbookLink + indexLink + link + pool + '</div></details>';
   }
 
   function figureStrip(figures) {
@@ -144,16 +184,16 @@
     sec.groups.forEach(function (g, gi) {
       h += '<details class="group" ' + (gi === 0 ? 'open' : '') + '><summary>' + esc(g.title) + '</summary><div class="group-body">';
       g.blocks.forEach(function (b) {
-        if (b.t === 'p') h += '<p class="maskable">' + esc(b.text) + '</p>';
+        if (b.t === 'p') h += '<p class="maskable">' + rich(b.text) + '</p>';
         else if (b.t === 'table') {
           h += '<div class="tbl-wrap"><table>';
           b.rows.forEach(function (row, ri) {
             h += '<tr>' + row.map(function (c) {
-              return ri === 0 ? '<th>' + esc(c) + '</th>' : '<td class="maskable">' + esc(c) + '</td>';
+              return ri === 0 ? '<th>' + rich(c) + '</th>' : '<td class="maskable">' + rich(c) + '</td>';
             }).join('') + '</tr>';
           });
           h += '</table></div>';
-        } else if (b.t === 'note') h += '<p><span class="note-line">' + esc(b.text) + '</span></p>';
+        } else if (b.t === 'note') h += '<p><span class="note-line">' + rich(b.text) + '</span></p>';
         else if (b.t === 'img') h += '<figure class="inline-fig">' + figLink(b, true) + '</figure>';
       });
       h += '</div></details>';
@@ -186,13 +226,14 @@
         ' <span class="badge">' + groups[g].length + ' 题</span></summary><div class="group-body">';
       groups[g].forEach(function (o) {
         var id = itemId(sub.id, sec.id, o.i), ok = !!S.done[id];
-        var q = esc(o.it.q).replace(/＿＿＿＿/g, '<span class="blank">?</span>');
+        var q = rich(o.it.q).replace(/＿＿＿＿/g, '<span class="blank">?</span>');
         h += '<div class="card ' + (ok ? 'mastered' : '') + '" data-card="' + esc(id) + '">' +
-          '<div class="card-head"><div class="q-text">' + q + '</div></div>' +
+          '<div class="card-head"><div class="q-text">' + q + '</div>' + auditLine(o.it) + '</div>' +
           '<div class="answers hidden">' + o.it.a.map(function (a) {
             return '<span class="answer-chip">' + esc(a) + '</span>';
           }).join('') + '</div>' +
           '<div class="answer-full hidden">' + fillFull(o.it) + '</div>' +
+          (o.it.knowledge ? '<details class="knowledge-tip"><summary>关联知识点讲解</summary><div>' + esc(o.it.knowledge) + '</div></details>' : '') +
           '<div class="card-actions">' +
           '<button class="btn small" data-act="reveal-fill">显示答案</button>' +
           '<button class="btn small ' + (ok ? 'on' : '') + '" data-act="master" data-id="' + esc(id) + '">' + (ok ? '✓ 已掌握' : '标记已掌握') + '</button>' +
@@ -204,21 +245,21 @@
   }
 
   function renderMcq(sec, sub) {
-    var answered = 0, correct = 0;
+    var answered = 0, correct = 0, hotCount = 0;
     sec.items.forEach(function (it, i) {
       var v = S.quiz[itemId(sub.id, sec.id, i)];
-      if (v) { answered++; if (v === it.ans) correct++; }
+      if (v) { answered++; if (v === it.ans) correct++; } if (it.hot) hotCount++;
     });
     var h = '<div class="quiz-bar"><span>已答 <b>' + answered + '/' + sec.items.length + '</b>　答对 <b>' + correct + '</b></span>' +
       '<div class="bar"><i style="width:' + (sec.items.length ? Math.round(answered / sec.items.length * 100) : 0) + '%"></i></div>' +
-      '<button class="btn small" data-act="quiz-filter" id="quizFilterBtn">只看错题</button>' +
+      '<button class="btn small" data-act="quiz-filter" id="quizFilterBtn">只看错题</button>' + (hotCount ? '<button class="btn small" data-act="quiz-hot-filter" id="quizHotFilterBtn">只看高频</button>' : '') +
       '<button class="btn small" data-act="quiz-reset">重做本组</button></div><div class="quiz-root">';
     sec.items.forEach(function (it, i) {
       var id = itemId(sub.id, sec.id, i), chosen = S.quiz[id], ok = chosen === it.ans;
-      h += '<div class="card quiz-card" data-no="' + it.no + '" data-wrong="' + (chosen && !ok ? '1' : '0') + '">' +
+      h += '<div class="card quiz-card" data-no="' + it.no + '" data-wrong="' + (chosen && !ok ? '1' : '0') + '" data-hot="' + (it.hot ? '1' : '0') + '">' +
         '<div class="card-head"><div class="q-text"><b>第 ' + it.no + ' 题</b>　' + esc(it.q) + '</div>' +
         '<span class="badge ' + (ok ? 'ok' : '') + '">' + (chosen ? (ok ? '✓ 答对' : '✗ 答错') : '未作答') + '</span></div>' +
-        qFigs(it.imgs) + '<div class="opts">';
+        qFigs(it.imgs) + auditLine(it) + '<div class="opts">';
       it.opts.forEach(function (o) {
         var cls = 'opt';
         if (chosen) {
@@ -242,10 +283,11 @@
     sec.items.forEach(function (it, i) {
       var id = itemId(sub.id, sec.id, i), ok = !!S.done[id];
       h += '<div class="qa-item' + (ok ? ' mastered' : '') + '">' +
-        '<div class="qa-q">' + esc(it.q) + (ok ? '　<span class="badge ok">✓ 已掌握</span>' : '') + '</div>' +
-        qFigs(it.imgs) +
+        '<div class="qa-q">' + rich(it.q) + (ok ? '　<span class="badge ok">✓ 已掌握</span>' : '') + '</div>' +
+        qFigs(it.imgs) + auditLine(it) +
         '<details class="qa-ans"><summary>展开参考答案</summary>' +
         '<div class="a-body">' + esc(it.a) +
+        (it.knowledge ? '<div class="knowledge-tip"><b>关联知识点：</b>' + esc(it.knowledge) + '</div>' : '') +
         '<div class="card-actions"><button class="btn small ' + (ok ? 'on' : '') + '" data-act="master" data-id="' + esc(id) + '">' +
         (ok ? '✓ 已掌握' : '标记已掌握') + '</button></div></div></details></div>';
     });
@@ -270,9 +312,10 @@
       groups[g].forEach(function (o) {
         var id = itemId(sub.id, sec.id, o.i), ok = !!S.done[id];
         h += '<div class="card ' + (ok ? 'mastered' : '') + '">' +
-          '<div class="card-head"><div class="q-text">' + esc(o.it.q) + '</div>' +
+          '<div class="card-head"><div class="q-text">' + rich(o.it.q) + '</div>' + auditLine(o.it) +
           '<span class="badge ' + (ok ? 'ok' : '') + '">' + (ok ? '✓ 已掌握' : '待背') + '</span></div>' +
-          '<div class="answer-full hidden">' + esc(o.it.a) + '</div>' +
+          '<div class="answer-full hidden">' + rich(o.it.a) + '</div>' +
+          (o.it.knowledge ? '<details class="knowledge-tip"><summary>关联知识点讲解</summary><div>' + esc(o.it.knowledge) + '</div></details>' : '') +
           '<div class="card-actions"><button class="btn small" data-act="reveal-card">显示答案</button>' +
           '<button class="btn small ' + (ok ? 'on' : '') + '" data-act="master" data-id="' + esc(id) + '">' + (ok ? '✓ 已掌握' : '标记已掌握') + '</button>' +
           '</div></div>';
@@ -297,7 +340,7 @@
       h += '<a class="file-item" href="' + esc(f.path) + '" download><span class="file-name">📎 ' + esc(f.name) + '</span>' +
         '<span class="file-size">' + esc(f.size) + '　下载 ⬇</span></a>';
     });
-    return h + '</div><p class="muted" style="margin-top:14px;font-size:13px">提示：浏览器不能直接预览 docx / pptx，点链接会下载到本地，用 Word / WPS / PowerPoint 打开即可看到试卷插图。</p>';
+    return h + '</div><p class="muted" style="margin-top:14px;font-size:13px">提示：点击资料名即可下载；PDF 可用浏览器、平板或 PDF 阅读器打开。</p>';
   }
 
   function renderGallery(sec) {
@@ -322,19 +365,28 @@
 
   /* ---------------- 学科页 ---------------- */
   function renderSubject(sub, sec) {
+    var path = learningPath(sub);
+    var pathIds = path.map(function (p) { return p.id; });
     var h = '<div class="wrap"><div class="sub-head"><a class="back-link" href="#/">← 返回学科总览</a>' +
-      '<h1>' + sub.emoji + '　' + esc(sub.name) + '</h1><p>' + esc(sub.sub) + '</p></div>' +
-      '<nav class="tabs">';
-    sub.sections.forEach(function (s) {
-      h += '<a class="tab ' + (s.id === sec.id ? 'active' : '') + '" href="#/' + sub.id + '/' + s.id + '">' +
-        s.icon + ' ' + esc(s.title) + '</a>';
+      '<h1>' + sub.emoji + '　' + esc(sub.name) + '</h1><p>' + esc(sub.sub) + '</p>' +
+      '<p class="learning-guide">按自己的节奏：先懂一个小知识点，再记住，再做少量题，最后复盘。</p></div>' +
+      '<nav class="tabs path-tabs" aria-label="学习路径">';
+    path.forEach(function (item) {
+      var active = item.id === sec.id;
+      h += '<a class="tab path-tab ' + (active ? 'active' : '') + '" href="#/' + sub.id + '/' + item.id + '"' +
+        ' title="' + esc(item.hint) + '"><span>' + item.icon + ' ' + item.label + '</span><small>' + esc(item.hint) + '</small></a>';
     });
-    h += '</nav><div class="section-head"><h2>' + esc(sec.title) + '</h2><p>' + esc(sec.desc) +
+    h += '</nav><details class="more-sections"><summary>更多内容 <span>保留全部原有板块</span></summary><nav class="all-tabs" aria-label="全部板块">';
+    sectionsOf(sub).forEach(function (s) {
+      h += '<a class="all-tab ' + (s.id === sec.id ? 'active' : '') + '" href="#/' + sub.id + '/' + s.id + '">' +
+        s.icon + (s.hot ? ' 🔥' : '') + (s.legacy ? ' ⚠️' : '') + ' ' + esc(s.title) + '</a>';
+    });
+    h += '</nav></details><div class="section-head"><h2>' + (sec.legacy ? '⚠️ ' : '') + esc(sec.title) + '</h2><p>' +
+      (sec.legacy ? '<span class="legacy-warning">旧资料/其他版本：不纳入 2026 人教版复习范围，待逐题迁移</span>　' : '') + esc(sec.desc) +
       (sec.source ? '　<span class="source-tag">来源：' + esc(sec.source) + '</span>' : '') + '</p></div>';
     h += (RENDERERS[sec.kind] || function () { return '<p class="muted">暂不支持的板块类型</p>'; })(sec, sub);
     h += figureStrip(sec.figures);
-    h += '</div>';
-    return h;
+    return h + '</div>';
   }
 
   /* ---------------- 路由 ---------------- */
@@ -345,8 +397,8 @@
     SUBJECTS.forEach(function (s) { if (s.id === parts[0]) sub = s; });
     if (!sub) return { sub: null, sec: null };
     var sec = null;
-    sub.sections.forEach(function (s) { if (s.id === parts[1]) sec = s; });
-    return { sub: sub, sec: sec || sub.sections[0] };
+    sectionsOf(sub).forEach(function (s) { if (s.id === parts[1]) sec = s; });
+    return { sub: sub, sec: sec || byId(sub.id, learningPath(sub)[0].id) };
   }
 
   var view = { sub: null, sec: null, masked: false, quizFilter: 'all', focusList: [], focusIdx: 0, focusMode: 'cards' };
@@ -360,6 +412,10 @@
     view.sub = r.sub; view.sec = r.sec;
     if (!sameRoute) { view.masked = false; view.quizFilter = 'all'; }
     el('app').innerHTML = r.sub ? renderSubject(r.sub, r.sec) : renderHome();
+    if (r.sub) {
+      var activeTab = el('app').querySelector('.tab.active');
+      if (activeTab && activeTab.scrollIntoView) activeTab.scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
     document.title = (r.sub ? r.sub.name + ' · ' + r.sec.title + ' · ' : '') + '初一上 · 期中在线复习';
     if (view.masked) {
       var ms = el('app').querySelectorAll('.maskable');
@@ -375,7 +431,7 @@
   var SEARCH = [];
   function buildSearch() {
     SUBJECTS.forEach(function (sub) {
-      sub.sections.forEach(function (sec) {
+      sectionsOf(sub).forEach(function (sec) {
         var add = function (text) {
           if (text && String(text).trim()) SEARCH.push({ sub: sub.id, sec: sec.id,
             subName: sub.name, secTitle: sec.title, text: String(text).replace(/\s+/g, ' ').trim() });
@@ -440,7 +496,7 @@
   function paintFocus(reveal) {
     var o = view.focusList[view.focusIdx];
     if (!o) return;
-    var q = esc(o.it.q).replace(/＿＿＿＿/g, '<span class="blank">?</span>');
+    var q = rich(o.it.q).replace(/＿＿＿＿/g, '<span class="blank">?</span>');
     var a = esc(Array.isArray(o.it.a) ? o.it.a.join('　/　') : o.it.a);
     var ok = !!S.done[o.id];
     el('focusBody').innerHTML = '<div class="fq">' + q + '</div>' +
@@ -517,6 +573,12 @@
         }
         node.textContent = view.quizFilter === 'all' ? '只看错题' : '显示全部';
         node.classList.toggle('on', view.quizFilter === 'wrong');
+        return;
+      case 'quiz-hot-filter':
+        var hotCards = el('app').querySelectorAll('.quiz-card');
+        var hotOn = node.classList.toggle('on');
+        for (var hm = 0; hm < hotCards.length; hm++) hotCards[hm].style.display = (!hotOn || hotCards[hm].dataset.hot === '1') ? '' : 'none';
+        node.textContent = hotOn ? '显示全部' : '只看高频';
         return;
       case 'quiz-reset':
         if (!confirm('确定清空本组选择题的作答记录吗？')) return;

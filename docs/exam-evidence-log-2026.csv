@@ -1,0 +1,30 @@
+﻿subject,academic_year,region,edition,source_url,answer_available,source_type,official_database_status,notes
+his,2026-2027,河北保定市高新技术开发区,统编版,https://www.21cnjy.com/H/8/49042/27042952.shtml,false,河北公开试卷预览,no_public_official_question_index_found,页面明示统编版和河北省；仅开放预览页
+his,2025-2026,河北邯郸市魏县,版本未独立明示,https://zy.21cnjy.com/25140540,false,河北公开试题页,no_public_official_question_index_found,地区和学年可核对；版本作为候选样式不升级为同版本证据
+his,2024-2025,全国公开样式基线,统编版2024样式,https://zy.21cnjy.com/21416950,true,公开试题页,no_public_official_question_index_found,用于近三年题型基线，不代表河北官方题库
+geo,2025-2026,河北保定市安新县,人教版样式,https://zy.21cnjy.com/25097653,true,河北公开试卷页,no_public_official_question_index_found,页面含选择题答案；教材版本需以页面和原卷印记逐份复核
+geo,2025-2026,河北沧州市献县,人教版样式,https://zy.21cnjy.com/26816508,true,河北公开试卷页,no_public_official_question_index_found,页面含解析和答案；用于人教版样式池
+geo,2024-2025,全国公开样式基线,人教版2024,https://zy.21cnjy.com/22052960,true,公开试卷页,no_public_official_question_index_found,页面明确人教版2024；非河北地区
+bio,2024-2025,河北石家庄市新华区,人教版2024样式,https://zy.21cnjy.com/22256037,true,河北公开试卷页,no_public_official_question_index_found,页面含答案和新教材知识点
+bio,2025-2026,河北张家口市怀安县,人教版样式,https://zy.21cnjy.com/25188942,true,河北公开试卷页,no_public_official_question_index_found,页面含答案；版本需以原卷印记复核
+bio,2025-2026,河北邢台市襄都区,人教版,https://zy.21cnjy.com/24726252,true,河北同版本公开试题页,no_public_official_question_index_found,页面明示人教版并标注第一单元至第二单元范围
+bio,2026-2027,河北省多地,版本待逐份核验,https://www.21cnjy.com/city/hebei/ziliao/,true,河北资料索引,no_public_official_question_index_found,索引列出多份七年级生物试卷，具体页面需逐份打开核验
+df,2025-2026,河北张家口市宣化区,统编版样式,https://zy.21cnjy.com/25075765,true,河北公开试卷页,no_public_official_question_index_found,页面含答案；版本以原卷和详情页综合核验
+df,2025-2026,河北保定市唐县,统编版候选,https://zy.21cnjy.com/25094824,true,河北公开试卷页,no_public_official_question_index_found,页面含答案；详情页未独立明示统编版，保留候选
+df,2024-2025,全国公开样式基线,统编版样式,https://zy.21cnjy.com/21990222,true,公开试卷页,no_public_official_question_index_found,用于近三年题型基线，不代表河北官方题库
+his,待从原页面复核,公开样式池记录（地区/学年待逐页复核）,版本待逐页复核,https://zy.21cnjy.com/24966955,待复核,已有公开样式池来源,no_public_official_question_index_found,保留为来源池证据；未取得原件 SHA-256、官方题号或纸质教材逐题核验前，不升级为官方或 verified
+his,待从原页面复核,公开样式池记录（地区/学年待逐页复核）,版本待逐页复核,https://zy.21cnjy.com/25005591,待复核,已有公开样式池来源,no_public_official_question_index_found,保留为来源池证据；未取得原件 SHA-256、官方题号或纸质教材逐题核验前，不升级为官方或 verified
+geo,待从原页面复核,公开样式池记录（地区/学年待逐页复核）,版本待逐页复核,https://zy.21cnjy.com/21958595,待复核,已有公开样式池来源,no_public_official_question_index_found,保留为来源池证据；未取得原件 SHA-256、官方题号或纸质教材逐题核验前，不升级为官方或 verified
+geo,待从原页面复核,公开样式池记录（地区/学年待逐页复核）,版本待逐页复核,https://zy.21cnjy.com/26346772,待复核,已有公开样式池来源,no_public_official_question_index_found,保留为来源池证据；未取得原件 SHA-256、官方题号或纸质教材逐题核验前，不升级为官方或 verified
+geo,待从原页面复核,公开样式池记录（地区/学年待逐页复核）,版本待逐页复核,https://zy.21cnjy.com/26745512,待复核,已有公开样式池来源,no_public_official_question_index_found,保留为来源池证据；未取得原件 SHA-256、官方题号或纸质教材逐题核验前，不升级为官方或 verified
+geo,待从原页面复核,公开样式池记录（地区/学年待逐页复核）,版本待逐页复核,https://www.renrendoc.com/paper/390625185.html,待复核,已有公开样式池来源,no_public_official_question_index_found,保留为来源池证据；未取得原件 SHA-256、官方题号或纸质教材逐题核验前，不升级为官方或 verified
+bio,待从原页面复核,公开样式池记录（地区/学年待逐页复核）,版本待逐页复核,https://zy.21cnjy.com/24728496,待复核,已有公开样式池来源,no_public_official_question_index_found,保留为来源池证据；未取得原件 SHA-256、官方题号或纸质教材逐题核验前，不升级为官方或 verified
+df,待从原页面复核,公开样式池记录（地区/学年待逐页复核）,版本待逐页复核,https://zy.21cnjy.com/24057648,待复核,已有公开样式池来源,no_public_official_question_index_found,保留为来源池证据；未取得原件 SHA-256、官方题号或纸质教材逐题核验前，不升级为官方或 verified
+df,待从原页面复核,公开样式池记录（地区/学年待逐页复核）,版本待逐页复核,https://zy.21cnjy.com/24751255,待复核,已有公开样式池来源,no_public_official_question_index_found,保留为来源池证据；未取得原件 SHA-256、官方题号或纸质教材逐题核验前，不升级为官方或 verified
+his,2026-2027,河北省石家庄市裕华区石家庄外国语学校,版本待逐页复核,https://www.21cnjy.com/H/8/49042/27066362.shtml,true,2026-2027河北公开试卷详情页,no_public_official_question_index_found,标题确认地区、学年、七年级上历史；版本未独立明示，不计入同版本池
+geo,2026-2027,河北省张家口市桥西区,版本待逐页复核,https://www.21cnjy.com/H/10/49126/27073357.shtml,true,2026-2027河北公开试卷详情页,no_public_official_question_index_found,标题确认地区、学年、七年级上地理；版本未独立明示，不计入同版本池
+bio,2026-2027,河北省保定市定州市,版本待逐页复核,https://www.21cnjy.com/H/11/49151/27057063.shtml,true,2026-2027河北公开试卷详情页,no_public_official_question_index_found,标题确认地区、学年、七年级上生物；版本未独立明示，不计入同版本池
+df,2026-2027,河北省保定市高新技术产业开发区,版本待逐页复核,https://www.21cnjy.com/H/9/49083/27064926.shtml,true,2026-2027河北公开试卷详情页,no_public_official_question_index_found,标题确认地区、学年、七年级上道德与法治；版本未独立明示，不计入同版本池
+bio,2026-2027,河北省唐山市遵化市,版本待逐页复核,https://www.21cnjy.com/H/11/49151/27047868.shtml,true,2026-2027河北公开试卷详情页,no_public_official_question_index_found,标题确认地区、学年、七年级上生物；版本未独立明示，不计入同版本池
+his,2026-2027,河北省衡水市第八中学,版本待逐页复核,https://www.21cnjy.com/H/8/49042/27074610.shtml,true,2026-2027河北公开试卷详情页,no_public_official_question_index_found,标题确认地区、学年、七年级上历史；版本未独立明示，不计入同版本池
+df,2026-2027,河北秦皇岛市抚宁区,版本待逐页复核,https://www.21cnjy.com/H/9/49083/27065381.shtml,true,2026-2027河北公开试卷详情页,no_public_official_question_index_found,标题确认地区、学年、七年级上道德与法治；版本未独立明示，不计入同版本池

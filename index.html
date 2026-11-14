@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="初一上期中考试在线复习站：生物、历史、道法、地理四科知识点、填空自测、选择题刷题、识图速查与抽背卡片。">
+<meta name="description" content="初一上期中考试在线复习站：生物、历史、道法、地理、语文、数学、英语七科知识点、填空自测、选择题刷题、识图速查与抽背卡片。">
 <title>初一上 · 期中在线复习</title>
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=20261115">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
 </head>
 <body>
@@ -21,7 +21,7 @@
 <main id="app" tabindex="-1"></main>
 
 <footer class="footer">
-  <p>生物 / 历史 / 道法整理自厦外 2026-2027 学年七上期中复习资料；地理按湘教版 2024 版教材自主整理（非校内原卷，示意图为自制） · 仅作个人复习使用，答案以老师课堂讲授为准</p>
+  <p>历史 / 地理 / 生物 / 道德与法治已接入人教版/统编版2024秋七上目录和知识主线；旧校内或旧版本资料均标注待迁移。语文、数学、英语按人教版/统编版2024秋教材自主整理，非校内原卷 · 仅作个人复习使用，答案以老师课堂讲授为准</p>
   <p>纯静态页面，无需联网；复习进度保存在本机浏览器（localStorage）</p>
 </footer>
 
@@ -33,7 +33,7 @@
       <input id="searchInput" type="search" placeholder="搜索知识点、题目、答案…" autocomplete="off">
       <button class="icon-btn" id="searchClose" aria-label="关闭">✕</button>
     </div>
-    <div id="searchResults" class="search-results"><p class="muted">输入关键词，例如「显微镜」「分封制」「友谊」「经纬网」。</p></div>
+    <div id="searchResults" class="search-results"><p class="muted">输入关键词，例如「显微镜」「分封制」「友谊」「经纬网」「绝对值」「观沧海」「there be」。</p></div>
   </div>
 </div>
 
@@ -49,10 +49,13 @@
   </div>
 </div>
 
-<script src="data/bio.js"></script>
-<script src="data/his.js"></script>
-<script src="data/df.js"></script>
-<script src="data/geo.js"></script>
-<script src="assets/app.js"></script>
+<script src="data/bio.js?v=20261115"></script>
+<script src="data/his.js?v=20261115"></script>
+<script src="data/df.js?v=20261115"></script>
+<script src="data/geo.js?v=20261115"></script>
+<script src="data/zh.js?v=20261115"></script>
+<script src="data/math.js?v=20261115"></script>
+<script src="data/eng.js?v=20261115"></script>
+<script src="assets/app.js?v=20261115"></script>
 </body>
 </html>

@@ -2,3 +2,6 @@
 Thumbs.db
 __MACOSX/
 *.tmp
+
+__pycache__/
+*.pyc
