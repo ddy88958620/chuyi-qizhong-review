@@ -17,7 +17,12 @@
     <a class="icon-btn" id="githubLink" href="#" target="_blank" rel="noopener" title="在 GitHub 查看源码" aria-label="GitHub">GH</a>
   </div>
 </header>
-
+<div id="focusBar" class="focus-bar" role="status" aria-live="polite">
+  <span class="focus-label">🎯 专注学习</span><span>有效 <b data-focus-time>00:00</b> / <b data-focus-goal>15:00</b></span>
+  <span class="focus-away">离开 <b data-focus-away>0</b> 次</span>
+  <button class="btn small primary" id="focusStart" data-focus-start>开始专注</button>
+  <button class="btn small ghost" id="focusEnd">结束</button>
+</div>
 <main id="app" tabindex="-1"></main>
 
 <footer class="footer">

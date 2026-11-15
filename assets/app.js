@@ -11,13 +11,44 @@
   function loadState() {
     try {
       var s = JSON.parse(localStorage.getItem(STORE) || '{}');
-      return { done: s.done || {}, quiz: s.quiz || {}, theme: s.theme || null };
-    } catch (e) { return { done: {}, quiz: {}, theme: null }; }
+      return { done: s.done || {}, quiz: s.quiz || {}, theme: s.theme || null, focus: s.focus || { active: false, goal: 900, elapsed: 0, away: 0, last: 0 } };
+    } catch (e) { return { done: {}, quiz: {}, theme: null, focus: { active: false, goal: 900, elapsed: 0, away: 0, last: 0 } }; }
   }
   function saveState() {
     try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { /* 隐私模式下忽略 */ }
   }
   var S = loadState();
+  var focusTimer = null;
+  function focusText(sec) { sec = Math.max(0, Math.floor(sec || 0)); return String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0'); }
+  function paintFocusBar() {
+    var f = S.focus || {}; var bar = el('focusBar'); if (!bar) return;
+    var active = !!f.active && document.visibilityState === 'visible';
+    bar.classList.toggle('on', !!f.active); bar.querySelector('[data-focus-time]').textContent = focusText(f.elapsed);
+    bar.querySelector('[data-focus-goal]').textContent = focusText(f.goal);
+    bar.querySelector('[data-focus-away]').textContent = String(f.away || 0);
+    bar.querySelector('[data-focus-start]').textContent = f.active ? (active ? '暂停' : '等待返回') : '开始专注';
+    bar.querySelector('[data-focus-start]').dataset.running = f.active ? '1' : '';
+  }
+  function endFocus() {
+    if (!S.focus || !S.focus.active) return;
+    S.focus.active = false; saveState(); paintFocusBar();
+    alert('本次专注结束：有效学习 ' + focusText(S.focus.elapsed) + '，离开页面 ' + (S.focus.away || 0) + ' 次。');
+  }
+  function tickFocus() {
+    var f = S.focus; if (!f || !f.active) return;
+    if (document.visibilityState !== 'visible') { paintFocusBar(); return; }
+    if (f.last && Date.now() - f.last > 60000) { f.active = false; saveState(); paintFocusBar(); return; }
+    f.elapsed += 1; f.last = Date.now();
+    if (f.elapsed >= f.goal) { endFocus(); return; }
+    if (f.elapsed % 5 === 0) saveState(); paintFocusBar();
+  }
+  function toggleFocus() {
+    var f = S.focus || (S.focus = { active: false, goal: 900, elapsed: 0, away: 0, last: 0 });
+    if (f.active) { f.active = false; saveState(); paintFocusBar(); return; }
+    if (f.elapsed >= f.goal) { f.elapsed = 0; f.away = 0; }
+    f.active = true; f.last = Date.now(); saveState(); paintFocusBar();
+  }
+  function markFocusActivity() { if (S.focus && S.focus.active) S.focus.last = Date.now(); }
 
   function esc(s) {
     return String(s == null ? '' : s)
@@ -642,6 +673,11 @@
     document.documentElement.setAttribute('data-theme', t);
     el('themeBtn').textContent = t === 'dark' ? '☀️' : '🌙';
   }
+  el('focusStart').addEventListener('click', toggleFocus);
+  el('focusEnd').addEventListener('click', endFocus);
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden' && S.focus && S.focus.active) { S.focus.away = (S.focus.away || 0) + 1; saveState(); } paintFocusBar(); });
+  ['pointerdown', 'keydown', 'touchstart'].forEach(function (name) { document.addEventListener(name, markFocusActivity, { passive: true }); });
+  focusTimer = setInterval(tickFocus, 1000); paintFocusBar();
   applyTheme(S.theme || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
 
   buildSearch();

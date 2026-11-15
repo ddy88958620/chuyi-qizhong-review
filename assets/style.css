@@ -362,3 +362,7 @@ th { background: var(--bg-soft); font-weight: 650; }
   .path-tab small { display: none; }
   .more-sections > summary span { display: block; margin: 3px 0 0; font-size: 12px; }
 }
+.focus-bar { position: sticky; top: 61px; z-index: 35; display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:7px clamp(12px,3vw,28px); background:var(--accent-soft); border-bottom:1px solid var(--line); color:var(--ink-2); font-size:13px; }
+.focus-bar .focus-label { font-weight:700; color:var(--accent); }
+.focus-bar .focus-away { margin-left:auto; }
+@media (max-width:600px) { .focus-bar { top:58px; gap:7px; } .focus-bar .focus-away { margin-left:0; } }
